@@ -6,7 +6,7 @@ function App() {
   let [people, setPeople] = React.useState([]);
 
   React.useEffect(()=>{
-    fetch(`https://automatic-cod-7qxrwrq464vhxxxv-4000.app.github.dev/`)
+    fetch(`http://localhost:4000`)
       .then(res=>console.log(res));
   }, []);
   return (
