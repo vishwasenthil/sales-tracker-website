@@ -20,6 +20,7 @@ connection.connect(err=>{
             name VARCHAR(255) NOT NULL,
             time INT NOT NULL,
             sales INT NOT NULL,
+            profits INT NOT NULL,
             PRIMARY KEY (id)
         );`);
     }
