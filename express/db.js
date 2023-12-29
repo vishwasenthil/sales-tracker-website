@@ -1,20 +1,34 @@
 //connecting to mysql
 
-const mysql = require(`mysql2`);
+import mysql from "mysql2";
 
-const connection = mysql.createConnection({
+export const pool = mysql.createPool({ //allows for multiple connectionos to database
+    connectionLimit: 10,
     host:`127.0.0.1`,
     user:`root`,
     password:`password`,
-    database:`sales_tracker`,
+    database:`sales`,
+}).promise();
+
+pool.getConnection(err=>{
+    if(err) {
+        console.log(`mysql connection failed ${err}`);
+    } else {
+        console.log(`mysql connection succesful`);
+    }
 });
 
+/*
+let result = pool.query(`SELECT * FROM employees`).then(res=>console.log(res));
+console.log(result);
+*/
+
+/*
 connection.connect(err=>{
     if(err) {
         console.log(`mysql connection failed ${err}`);
     } else {
         console.log(`mysql connection succesful`);
-
         connection.query(`CREATE TABLE employees(
             id INT NOT NULL AUTO_INCREMENT,
             name VARCHAR(255) NOT NULL,
@@ -25,3 +39,4 @@ connection.connect(err=>{
         );`);
     }
 });
+*/

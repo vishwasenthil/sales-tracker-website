@@ -1,25 +1,23 @@
-const express = require(`express`);
+import express from "express";
 let app = express();
 
 const port = 4000;
-const cors = require(`cors`);
+import cors from "cors";
 
-const db = require("./db");
+import {pool} from "./db.js";
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); //parses json into js object
 
-app.get(`/`, (req, res)=>{
-    res.send(`hi`);
+app.get(`/`, async (req, res)=>{
+    let result = await pool.query(`SELECT * FROM employees`)
+    res.send(result);
 });
 
 app.post("/add-new-user", (req, res)=>{
     console.log(req.body);
-    /*
-    db.query(`INSERT INTO employees (name, time, sales, profits)
-    VALUES(${req}, 50, 9);`);
-    */
-    res.send("added new user");
+    pool.query(`INSERT INTO employees (name, time, sales, profits)
+    VALUES('${req.body.name}', ${req.body.time}, ${req.body.sales}, ${req.body.profits});`).then(pool.query(`SELECT * FROM employees`)).then(res=>console.log(res));
 });
 
 app.listen(port, ()=>{

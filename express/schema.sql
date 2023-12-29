@@ -1,0 +1,10 @@
+CREATE DATABASE sales;
+USE sales;
+
+CREATE TABLE employees(
+	id INT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(255) NOT NULL,
+    time INT NOT NULL,
+    sales INT NOT NULL,
+    PRIMARY KEY (id)
+);
