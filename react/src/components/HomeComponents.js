@@ -10,7 +10,6 @@ function SearchBar({people, setPeople}) {
 
     function handleClick() {
         setModal(!modal);
-        setPeople([...people, {name: "bob", totalSales: 1000, totalProfits: 1000, time: 1000}]);
     }
     function handleSubmit(e) {
         e.preventDefault();
@@ -29,6 +28,11 @@ function SearchBar({people, setPeople}) {
         .then(res=>{
             if(res.ok) {
                 console.log(`Data succesfully sent`);
+                fetch(`http://localhost:4000`)
+                    .then(res=>res.json())
+                    .then(res=>{
+                    setPeople(res[0]);
+                    });
             } else {
                 console.log(`Error sending data ${res.status}`);
             }
@@ -63,17 +67,18 @@ function Table({people}) {
                     <th>Total profits</th>
                     <th>Time with company</th>
                 </tr>
-                {people.map((person)=>{
+                
+                {people.map((person, index)=>{
                     return(
-                        <tr>
+                        <tr key={index}>
                             <td>
                                 {person.name}
                             </td>
                             <td>
-                                {person.totalSales}
+                                {person.sales}
                             </td>
                             <td>
-                                {person.totalProfits}
+                                {person.profits}
                             </td>
                             <td>
                                 {person.time}

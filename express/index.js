@@ -18,6 +18,7 @@ app.post("/add-new-user", (req, res)=>{
     console.log(req.body);
     pool.query(`INSERT INTO employees (name, time, sales, profits)
     VALUES('${req.body.name}', ${req.body.time}, ${req.body.sales}, ${req.body.profits});`).then(pool.query(`SELECT * FROM employees`)).then(res=>console.log(res));
+    res.sendStatus(200)
 });
 
 app.listen(port, ()=>{

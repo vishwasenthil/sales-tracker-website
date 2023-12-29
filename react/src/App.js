@@ -3,18 +3,21 @@ import Navbar from "./components/Navbar";
 import {SearchBar, Table} from "./components/HomeComponents";
 
 function App() {
-  let [people, setPeople] = React.useState([]);
+  let [people, setPeople] = React.useState();
 
   React.useEffect(()=>{
     fetch(`http://localhost:4000`)
       .then(res=>res.json())
-      .then(res=>console.log(res));
+      .then(res=>{
+        setPeople(res[0]);
+      });
   }, []);
+
   return (
     <div className="App">
       <Navbar/>
       <SearchBar people={people} setPeople={setPeople}/>
-      <Table people={people}/>
+      {people === undefined ? <p>Loading</p> : <Table people={people}/>}
     </div>
   );
 }
