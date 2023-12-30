@@ -10,6 +10,7 @@ function App() {
       .then(res=>res.json())
       .then(res=>{
         setPeople(res[0]);
+        console.log(res[0]);
       });
   }, []);
 

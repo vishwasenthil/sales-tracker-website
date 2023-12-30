@@ -18,6 +18,14 @@ pool.getConnection(err=>{
     }
 });
 
+export function addEmployee(name, time, sales, profits) {
+    pool.query(`INSERT INTO employees (name, time, sales, profits)
+    VALUES('${name}', ${time}, ${sales}, ${profits});`).then(pool.query(`SELECT * FROM employees`)).then(res=>console.log(res));
+}
+
+export function deleteEmployee(id) {
+    pool.query(`DELETE FROM employees WHERE id=${id}`);
+}
 /*
 let result = pool.query(`SELECT * FROM employees`).then(res=>console.log(res));
 console.log(result);

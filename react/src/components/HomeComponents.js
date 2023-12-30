@@ -11,6 +11,13 @@ function SearchBar({people, setPeople}) {
     function handleClick() {
         setModal(!modal);
     }
+    function refreshData() {
+        fetch(`http://localhost:4000`)
+            .then(res=>res.json())
+            .then(res=>{
+            setPeople(res[0]);
+        });
+    }
     function handleSubmit(e) {
         e.preventDefault();
         fetch(`http://localhost:4000/add-new-user`, {
@@ -28,19 +35,18 @@ function SearchBar({people, setPeople}) {
         .then(res=>{
             if(res.ok) {
                 console.log(`Data succesfully sent`);
-                fetch(`http://localhost:4000`)
-                    .then(res=>res.json())
-                    .then(res=>{
-                    setPeople(res[0]);
-                    });
             } else {
                 console.log(`Error sending data ${res.status}`);
             }
         })
     }
+
+    function filterTable(e) {
+        console.log(e.target.value);
+    }
     return(
         <div>
-            <input type="text" placeholder="search"/>
+            <input type="text" placeholder="search" onChange={filterTable}/>
             <button onClick={handleClick}>add</button><br/>
             {modal && 
             <>
@@ -58,6 +64,12 @@ function SearchBar({people, setPeople}) {
 }
 
 function Table({people}) {
+    async function deleteEmployee(id) {
+        let response = await fetch(`http://localhost:4000/delete-employee/${id}`, {
+            method:`DELETE`
+        });
+        response.ok ? console.log(`Deleted employee ${id}`) : console.log(`Error deleting employee: ${response}`);
+    }
     return(
         <>
             <table>
@@ -68,9 +80,9 @@ function Table({people}) {
                     <th>Time with company</th>
                 </tr>
                 
-                {people.map((person, index)=>{
+                {people.map((person)=>{
                     return(
-                        <tr key={index}>
+                        <tr key={person.id}>
                             <td>
                                 {person.name}
                             </td>
@@ -82,6 +94,9 @@ function Table({people}) {
                             </td>
                             <td>
                                 {person.time}
+                            </td>
+                            <td>
+                                <button href="#" onClick={()=>deleteEmployee(person.id)}>Delete</button>
                             </td>
                         </tr>
                     );
