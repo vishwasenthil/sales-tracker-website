@@ -1,6 +1,6 @@
 import React from "react";
 
-function SearchBar({people, setPeople}) {
+function SearchBar({people, setPeople, onSearch}) {
     let [modal, setModal] = React.useState(false);
 
     let [name, setName] = React.useState(``);
@@ -41,12 +41,14 @@ function SearchBar({people, setPeople}) {
         })
     }
 
+    let [searchBar, setSearchBar] = React.useState(``);
     function filterTable(e) {
-        console.log(e.target.value);
+        setSearchBar(e.target.value);
+        onSearch(e.target.value);
     }
     return(
         <div>
-            <input type="text" placeholder="search" onChange={filterTable}/>
+            <input type="text" placeholder="search" value={searchBar} onChange={filterTable}/>
             <button onClick={handleClick}>add</button><br/>
             {modal && 
             <>

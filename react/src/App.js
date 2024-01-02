@@ -14,10 +14,15 @@ function App() {
       });
   }, []);
 
+  function handleSearch(searchTerm) {
+    setPeople(people.filter(person=>person.name === searchTerm));
+    console.log(`people ${people}`);
+  }
+
   return (
     <div className="App">
       <Navbar/>
-      <SearchBar people={people} setPeople={setPeople}/>
+      <SearchBar people={people} setPeople={setPeople} onSearch={handleSearch}/>
       {people === undefined ? <p>Loading</p> : <Table people={people}/>}
     </div>
   );
