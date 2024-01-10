@@ -45,6 +45,7 @@ function SearchBar({people, setPeople, onSearch}) {
     function filterTable(e) {
         setSearchBar(e.target.value);
         onSearch(e.target.value);
+        
     }
     return(
         <div>
@@ -81,7 +82,6 @@ function Table({people}) {
                     <th>Total profits</th>
                     <th>Time with company</th>
                 </tr>
-                
                 {people.map((person)=>{
                     return(
                         <tr key={person.id}>
