@@ -67,7 +67,7 @@ function SearchBar({people, setPeople, onSearch}) {
 }
 
 function Table({people}) {
-    async function deleteEmployee(id) {
+    async function deleteEmployee(id) { //deletes employee on button click
         let response = await fetch(`http://localhost:4000/delete-employee/${id}`, {
             method:`DELETE`
         });

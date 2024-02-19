@@ -3,8 +3,8 @@ import Navbar from "./components/Navbar";
 import {SearchBar, Table} from "./components/HomeComponents";
 
 function App() {
-  let [people, setPeople] = React.useState();
-  let [filteredArr, setFilteredArr] = React.useState(people);
+  let [people, setPeople] = React.useState(); //contains original array
+  let [filteredArr, setFilteredArr] = React.useState(people); //contains filtered array
 
   React.useEffect(()=>{
     fetch(`http://localhost:4000`)
@@ -12,13 +12,14 @@ function App() {
       .then(res=>{
         setPeople(res[0]);
         setFilteredArr(res[0]);
-        console.log(res[0]);
+        console.log(res[0]); //res returns array with 2 arrays, first array contain data
       });
   }, []);
 
   function handleSearch(searchTerm) {
-    console.log(`people ${people.name}`);
-    setFilteredArr(people.filter(person=>person.name.includes(searchTerm)));
+    console.log(people);
+    console.log(filteredArr);
+    setFilteredArr(people.filter(person=>person.name.includes(searchTerm))); //sets filtered arry by filtering contents in people array
     //setPeople(people.filter(person=>person.name.includes(searchTerm)));
   }
 
